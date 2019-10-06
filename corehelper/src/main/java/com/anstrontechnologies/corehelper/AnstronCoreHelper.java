@@ -6,9 +6,14 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.OpenableColumns;
+import android.text.format.DateFormat;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class AnstronCoreHelper {
@@ -182,5 +187,97 @@ public class AnstronCoreHelper {
         return dec.format(fileSize) + suffix;
     }
 
+    /**
+     * Get timestamp
+     * @return timestamp
+     * @author Anstron Technologies
+     *
+     */
+    public String getTimeStamp(){
+        long tsLong = System.currentTimeMillis()/1000;
+        return Long.toString(tsLong);
+    }
 
+    /**
+     * Get current date and time in 12 hrs format
+     * @return current date and time
+     * @author Anstron Technologies
+     *
+     */
+    public String getDateTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
+    /**
+     * Get current date and time in 12 hr format
+     * @param format if 24 then time will be returned in 24 hrs format.
+     * @return current date and time
+     * @author Anstron Technologies
+     *
+     */
+    public String getDateTime(int format){
+        if (format == 24){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+            return sdf.format(new Date());
+        }else{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
+            return sdf.format(new Date());
+        }
+    }
+
+    /**
+     * Convert first letter from lower case to uppercase.
+     * @param string to convert first letter from lower to upper case.
+     * @return string
+     * @author Anstron Technologies
+     *
+     */
+    public String firstUpperCase(String string){
+        String firstLetter = String.valueOf(string.charAt(0)).toUpperCase();
+        String remainingLetters = string.substring(1);
+        return firstLetter+remainingLetters;
+    }
+
+    /**
+     * Get file size from uri
+     * @param uri to get file size
+     * @return file size
+     * @deprecated 10.0
+     * @author Anstron Technologies
+     *
+     */
+    public String getFileSizeFromUri(Uri uri) {
+        String result = null;
+        if (uri.getScheme() != null){
+            if (uri.getScheme().equals("content")) {
+                try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        result = cursor.getString(cursor.getColumnIndex(OpenableColumns.SIZE));
+                    }
+                }
+            }
+            if (result == null) {
+                result = uri.getPath();
+                int cut = result.lastIndexOf('/');
+                if (cut != -1) {
+                    result = result.substring(cut + 1);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Convert timestamp to human-readable date time in 12 hrs format.
+     * @param time to convert timestamp
+     * @return date and time in 12 hrs format.
+     * @author Anstron Technologies
+     *
+     */
+    public String timestampToDateTime(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        return DateFormat.format("yyyy-MM-dd HH:mm a", cal).toString();
+    }
 }
