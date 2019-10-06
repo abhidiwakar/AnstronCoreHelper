@@ -1,0 +1,2 @@
+include ':app', ':corehelper'
+rootProject.name='AnstronCoreHelper'
