@@ -51,6 +51,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Available Methods
 
+```
 1. getRandomNumber();  # get random number in the given range.
 2. createAlert();  # create and show an alert box with custom message.
 3. createToast();  # show basic toast message.
@@ -61,7 +62,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 8. firstUpperCase();  # return string after changing it's first letter in uppercase.
 9. getFileSizeFromUri();  # return file size of the given uri.
 10. timestampToDateTime();  # convert given timestamp to date and time in "yyyy-MM-dd HH:mm a" format.
-
+```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
